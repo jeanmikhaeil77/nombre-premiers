@@ -1,0 +1,61 @@
+def isprime(p_num: int) -> bool:
+    if p_num <= 1:
+        return False
+    
+    if p_num == 2:
+        return True
+
+    for i in range(2, p_num):
+        if p_num % i == 0:
+            return False
+
+def main():
+    print("--- Test de la fonction isprime() version simple ---")
+
+    print(f"isprime(1): {isprime(1)} (Attendu: False)")
+    print(f"isprime(2): {isprime(2)} (Attendu: True)")
+    print(f"isprime(4): {isprime(4)} (Attendu: False)")
+
+    print(f"isprime(3): {isprime(3)} (Attendu: True)")
+    print(f"isprime(7): {isprime(7)} (Attendu: True)")
+    print(f"isprime(13): {isprime(13)} (Attendu: True)")
+  
+    print(f"isprime(9): {isprime(9)} (Attendu: False)")
+    print(f"isprime(15): {isprime(15)} (Attendu: False)")
+
+if __name__ == "__main__":
+    main()
+
+import pytest
+from main import isprime
+
+PRIME_NUMBERS = [
+    2, 3, 5, 7, 11, 13, 17, 19, 23, 29,
+    31, 37, 41, 43, 47, 53, 59, 61, 67,
+    71, 73, 79, 83, 89, 97, 101, 103, 107, 109
+]
+
+COMPOSITE_NUMBERS = [
+    1, 4, 6, 8, 9, 10, 12, 14, 15, 16,
+    18, 20, 21, 22, 24, 25, 26, 27, 28,
+    30, 49, 100, 121, 144
+]
+
+EDGE_CASES = [
+    (0, False),
+    (-5, False),
+    (119, False),
+    (1000, False),
+]
+
+@pytest.mark.parametrize("number", PRIME_NUMBERS)
+def test_prime_numbers_are_true(number):
+    assert isprime(number) is True
+
+@pytest.mark.parametrize("number", COMPOSITE_NUMBERS)
+def test_composite_numbers_are_false(number):
+    assert isprime(number) is False
+
+@pytest.mark.parametrize("number, expected", EDGE_CASES)
+def test_edge_cases(number, expected):
+    assert isprime(number) is expected

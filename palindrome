@@ -1,0 +1,82 @@
+import string
+def ispalindrome(s: str) -> bool:
+    cleaned_s = clean_string(s)
+    return cleaned_s == cleaned_s[::-1]
+
+def main():
+    print("--- Test de la fonction ispalindrome() ---")
+    print(f"ispalindrome('kayak'): {ispalindrome('kayak')}")
+    print(f"ispalindrome('bonjour'): {ispalindrome('bonjour')}")
+    print(f"ispalindrome('Engage le jeu que je le gagne'): {ispalindrome('Engage le jeu que je le gagne')}")
+    print(f"ispalindrome('La mariée ira mal'): {ispalindrome('La mariée ira mal')}")
+    print(f"ispalindrome('À l\'autel elle alla, elle l\'y tua.'): {ispalindrome('À l\'autel elle alla, elle l\'y tua.')}")
+    print(f"ispalindrome('101'): {ispalindrome('101')}")
+    print(f"ispalindrome('Mon nom'): {ispalindrome('Mon nom')}")
+    print(f"ispalindrome('Test'): {ispalindrome('Test')}")
+
+if __name__ == "__main__":
+    main()import string
+
+def ispalindrome(s: str) -> bool:
+    cleaned_s = clean_string(s)
+    return cleaned_s == cleaned_s[::-1]
+
+def main():
+    print("--- Test de la fonction ispalindrome() ---")
+    print(f"ispalindrome('kayak'): {ispalindrome('kayak')}")
+    print(f"ispalindrome('bonjour'): {ispalindrome('bonjour')}")
+    print(f"ispalindrome('Engage le jeu que je le gagne'): {ispalindrome('Engage le jeu que je le gagne')}")
+    print(f"ispalindrome('La mariée ira mal'): {ispalindrome('La mariée ira mal')}")
+    print(f"ispalindrome('À l\'autel elle alla, elle l\'y tua.'): {ispalindrome('À l\'autel elle alla, elle l\'y tua.')}")
+    print(f"ispalindrome('101'): {ispalindrome('101')}")
+    print(f"ispalindrome('Mon nom'): {ispalindrome('Mon nom')}")
+    print(f"ispalindrome('Test'): {ispalindrome('Test')}")
+
+if __name__ == "__main__":
+    main()
+
+    import pytest
+from main import ispalindrome
+
+PALINDROME_TRUE_CASES = [
+    '',
+    'a',
+    'kayak',
+    'Ressasser',
+    'été',
+    'Mon nom',
+    'Mon nom',
+    'La mariée ira mal',
+    'À l\'autel elle alla, elle l\'y tua.',
+    'Engage le jeu que je le gagne',
+    'Esope reste ici et se repose',
+    'Ésope, reste ici et se repose !',
+    'Laval',
+    '121',
+    '10101',
+]
+
+PALINDROME_FALSE_CASES = [
+    'bonjour',
+    'python',
+    'Test',
+    'Ceci n\'est pas un palindrome',
+    'Palindrome',
+    '12345',
+]
+
+@pytest.mark.parametrize("text", PALINDROME_TRUE_CASES)
+def test_should_be_palindrome(text):
+    assert ispalindrome(text) is True
+
+@pytest.mark.parametrize("text", PALINDROME_FALSE_CASES)
+def test_should_not_be_palindrome(text):
+    assert ispalindrome(text) is False
+
+$ pytest .python
+
+$ pylint main.py
+
+$ git add .
+$ git commit -m "feat: Ajout et test de la fonction ispalindrome robuste."
+$ git push

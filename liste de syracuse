@@ -1,0 +1,97 @@
+import matplotlib.pyplot as plt
+
+def syr_plot(l: list, title: str):
+    plt.plot(l)
+    plt.title(title)
+    plt.xlabel("Temps de vol")
+    plt.ylabel("Valeur")
+    plt.grid(True)
+    plt.show()
+
+def syracuse_l(n: int) -> list:
+    syr_list = [n]
+    current = n
+    while current != 1:
+        if current % 2 == 0:
+            current = current // 2
+        else:
+            current = 3 * current + 1
+        syr_list.append(current)
+    return syr_list
+
+def temps_de_vol(l: list) -> int:
+    return len(l) - 1
+
+def temps_de_vol_en_altitude(l: list) -> int:
+    count = 0
+    for value in l:
+        if value > l[0]:
+            count += 1
+    return count
+
+def altitude_maximale(l: list) -> int:
+    return max(l)
+
+def main():
+    n_test = 3
+    syr_list_3 = syracuse_l(n_test)
+    print("--- Tests de la Liste de Syracuse (n=3) ---")
+    print(f"Suite de Syracuse pour n={n_test}: {syr_list_3} (Attendu: [3, 10, 5, 16, 8, 4, 2, 1])")
+    
+    tdv = temps_de_vol(syr_list_3)
+    print(f"Temps de vol pour n={n_test}: {tdv} (Attendu: 7)")
+    
+    tdva = temps_de_vol_en_altitude(syr_list_3)
+    print(f"Temps de vol en altitude pour n={n_test}: {tdva} (Attendu: 5)")
+    
+    alt_max = altitude_maximale(syr_list_3)
+    print(f"Altitude maximale pour n={n_test}: {alt_max} (Attendu: 16)")
+
+    n_test_2 = 6
+    syr_list_6 = syracuse_l(n_test_2)
+    print("\n--- Tests de la Liste de Syracuse (n=6) ---")
+    print(f"Suite de Syracuse pour n={n_test_2}: {syr_list_6}")
+    print(f"Temps de vol pour n={n_test_2}: {temps_de_vol(syr_list_6)}")
+    print(f"Altitude maximale pour n={n_test_2}: {altitude_maximale(syr_list_6)}")
+
+    # syr_plot(syr_list_3, f"Suite de Syracuse pour n={n_test}")
+
+if __name__ == "__main__":
+    main()
+
+import pytest
+from main import syracuse_l, temps_de_vol, temps_de_vol_en_altitude, altitude_maximale
+
+TEST_CASES = [
+    (3, [3, 10, 5, 16, 8, 4, 2, 1], 7, 5, 16),
+    (6, [6, 3, 10, 5, 16, 8, 4, 2, 1], 8, 4, 16),
+    (7, [7, 22, 11, 34, 17, 52, 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1], 16, 12, 52),
+    (1, [1], 0, 0, 1),
+    (2, [2, 1], 1, 0, 2),
+]
+
+@pytest.mark.parametrize("n, expected_list, tdv, tdva, alt_max", TEST_CASES)
+def test_syracuse_l(n, expected_list, tdv, tdva, alt_max):
+    assert syracuse_l(n) == expected_list
+
+@pytest.mark.parametrize("n, expected_list, tdv, tdva, alt_max", TEST_CASES)
+def test_temps_de_vol(n, expected_list, tdv, tdva, alt_max):
+    assert temps_de_vol(expected_list) == tdv
+
+@pytest.mark.parametrize("n, expected_list, tdv, tdva, alt_max", TEST_CASES)
+def test_temps_de_vol_en_altitude(n, expected_list, tdv, tdva, alt_max):
+    assert temps_de_vol_en_altitude(expected_list) == tdva
+
+@pytest.mark.parametrize("n, expected_list, tdv, tdva, alt_max", TEST_CASES)
+def test_altitude_maximale(n, expected_list, tdv, tdva, alt_max):
+    assert altitude_maximale(expected_list) == alt_max
+
+$ python main.py
+
+$ pytest .python
+
+$ pylint main.py
+
+$ git add .
+$ git commit -m "feat: Implémentation et tests de la suite de Syracuse avec liste."
+$ git push
